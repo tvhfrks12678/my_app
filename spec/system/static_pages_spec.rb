@@ -5,7 +5,8 @@ RSpec.describe 'StaticPages', type: :system do
 
   scenario 'homeを表示できること' do
     visit static_pages_home_path
-    expect(page).to have_title "Home | #{base_title}"
+    expect(page).to have_title base_title
+    expect(page).not_to have_title 'Home | '
   end
 
   scenario 'helpを表示できること' do
