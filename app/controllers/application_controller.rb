@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   def hello
-    render json: "hello"
+    word = 'hello'
+
+    render json: word
   end
 end
