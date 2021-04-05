@@ -45,6 +45,8 @@ Style/FrozenStringLiteralComment:
 # Style/RedundantSelf:
 #   Enabled: false
 
+Style/EmptyMethod:
+  Enabled: false
 ##################### Lint ##################################
 
 ##################### Metrics ##################################
