@@ -14,12 +14,16 @@ AllCops:
     - 'lib/**'
     - 'db/**/*'
     - 'config/**/*'
+    - 'config/**/'
+    - 'config/application.rb'
     - 'script/**/*'
     - 'vendor/**/*'
     - 'bin/**'
     - 'node_modules/**/*'
     - 'tmp/**/*'
     - 'lib/**/*'
+    - 'spec/spec_helper.rb'
+    - 'spec/rails_helper.rb'
   DisplayCopNames: true
   TargetRubyVersion: 2.7
 
