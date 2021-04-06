@@ -28,7 +28,6 @@ module MyApp
       g.test_framework :rspec,
                        controller_specs: false,
                        view_specs: false,
-                       helper_specs: false,
                        routing_specs: false
     end
 

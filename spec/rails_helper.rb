@@ -72,4 +72,6 @@ RSpec.configure do |config|
       end
     end
   end
+
+  config.include ApplicationHelper
 end

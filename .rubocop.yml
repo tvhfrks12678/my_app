@@ -75,3 +75,10 @@ Style/EmptyMethod:
 #   Max: 20
 #   Exclude:
 #     - 'db/migrate/*.rb'
+
+# Metrics/BlockLength:
+#   Exclude:
+#     - 'spec/**/*'
+
+Metrics/BlockLength:
+  IgnoredMethods: ['describe', 'context', 'scenario']
