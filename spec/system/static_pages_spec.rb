@@ -14,4 +14,10 @@ RSpec.describe 'StaticPages', type: :system do
       expect(page).to have_link 'Contact', href: contact_path
     end
   end
+
+  scenario 'Sign upページにアクセスする' do
+    visit root_path
+    click_link 'Sign up now!'
+    expect(page.title).to eq "Sign up | #{base_title}"
+  end
 end
