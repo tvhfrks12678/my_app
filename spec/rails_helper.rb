@@ -74,4 +74,9 @@ RSpec.configure do |config|
   end
 
   config.include ApplicationHelper
+
+  # テストユーザーがログイン中の場合にtrueを返す
+  def logged_in_user?
+    !session[:user_id].nil?
+  end
 end

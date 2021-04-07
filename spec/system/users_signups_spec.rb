@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Users', type: :system do
+RSpec.describe 'UsersSignups', type: :system do
   scenario '無効なユーザー情報を登録する' do
     visit root_path
     click_link 'Sign up now!'

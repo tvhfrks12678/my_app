@@ -12,6 +12,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      log_in @user
       flash[:success] = MG_USER_REGISTRATION_SUCCESS
       return redirect_to @user
     end

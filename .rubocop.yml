@@ -52,6 +52,10 @@ Style/FrozenStringLiteralComment:
 
 Style/EmptyMethod:
   Enabled: false
+
+# Todo 後で検討する
+Rails/HelperInstanceVariable:
+  Enabled: false
 ##################### Lint ##################################
 
 ##################### Metrics ##################################
