@@ -33,6 +33,8 @@ RSpec.describe 'UsersLogins', type: :system do
       expect(current_path).to eq root_path
       expect_display_log_out
     end
+    visit root_path
+    expect_display_log_out
   end
 
   def log_in_user(email:, password:)
@@ -56,6 +58,6 @@ RSpec.describe 'UsersLogins', type: :system do
   def expect_display_log_out
     expect(page).to have_link 'Log in'
     expect(page).to_not have_link 'Log out'
-    expect(page).to_not have_link 'Profile'
+    expect(page).to_not have_link 'Profile', href: user_path(user)
   end
 end

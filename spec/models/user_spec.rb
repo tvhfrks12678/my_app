@@ -3,8 +3,10 @@ require 'rails_helper'
 RSpec.describe User, type: :model do
   let(:user_valid) { FactoryBot.build(:user) }
 
-  it '名前、メールがある時は有効' do
-    expect(user_valid).to be_valid
+  context 'ユーザーの情報が正常な時' do
+    it '有効' do
+      expect(user_valid).to be_valid
+    end
   end
 
   describe '名前' do
@@ -99,6 +101,15 @@ RSpec.describe User, type: :model do
       user = FactoryBot.build(:user, password: 'a' * 5, password_confirmation: 'a' * 5)
       user.valid?
       expect(user.errors).to be_of_kind(:password, :too_short)
+    end
+  end
+
+  describe '#authenticated?' do
+    context 'remember_digestがnillの時' do
+      it 'falseをリターンする' do
+        user = FactoryBot.build(:user, remember_token: nil)
+        expect(user.authenticated?('')).to be_falsey
+      end
     end
   end
 end
