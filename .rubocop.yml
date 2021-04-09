@@ -53,6 +53,9 @@ Style/FrozenStringLiteralComment:
 Style/EmptyMethod:
   Enabled: false
 
+# RSpec/Focus:
+#   Enabled: true
+
 ##################### Lint ##################################
 
 ##################### Metrics ##################################
