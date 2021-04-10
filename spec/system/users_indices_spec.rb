@@ -19,8 +19,10 @@ RSpec.describe 'UsersIndices', type: :system do
       expect(page.body).to have_link user_info.name, href: user_path(user_info)
       expect(page.body).to have_link 'delete', href: user_path(user_info) unless user_info == @admin_user
     end
+
     expect do
-      click_link 'delete', match: :first
+      click_link 'delete', href: user_path(@no_admin_user)
+      # click_link 'delete', match: :first
     end.to change(User, :count).by(-1)
   end
 
