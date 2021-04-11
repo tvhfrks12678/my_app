@@ -29,7 +29,7 @@ RSpec.describe 'Users', type: :request do
       it 'ユーザーのデータが登録されない' do
         get signup_path
         user_registration_data = FactoryBot.attributes_for(:user, name: '', email: 'aa', password: 'b',
-                                                                  assword_confirmation: '')
+                                                                  password_confirmation: '')
         expect do
           post users_path, params: { user: user_registration_data }
         end.to_not change(User, :count)
@@ -39,11 +39,12 @@ RSpec.describe 'Users', type: :request do
     end
 
     context '有効なデータの時' do
-      it 'ユーザーのデータが登録される' do
+      it 'ユーザーのデータが登録され、アクティベート後、ログインできる' do
+        ActionMailer::Base.deliveries.clear
         get signup_path
-        user_registration_data = FactoryBot.attributes_for(:user)
+        user_params = FactoryBot.attributes_for(:user)
         expect do
-          post users_path, params: { user: user_registration_data }
+          post users_path, params: { user: user_params }
           aggregate_failures do
             expect(response).to redirect_to root_url
             follow_redirect!
@@ -52,6 +53,27 @@ RSpec.describe 'Users', type: :request do
             expect(logged_in_user?).to be_falsey
           end
         end.to change(User, :count).by(1)
+        expect(ActionMailer::Base.deliveries.size).to eq 1
+        user = User.find_by(email: user_params[:email])
+        expect(user).to_not be_activated
+        expect(logged_in_user?).to be_falsey
+        # 有効化していない状態でログインしてみる
+        log_in_as(user)
+        expect(logged_in_user?).to be_falsey
+        # 有効化トークンが不正な場合
+        get edit_account_activation_path('invalid token', email: user.email)
+        mail_body = ActionMailer::Base.deliveries.last.html_part.body.raw_source.to_s
+        user_activation_token = mail_body.match(%r{account_activations/(.+?)/})[1]
+        get edit_account_activation_path(user_activation_token, email: 'wrong')
+        expect(logged_in_user?).to be_falsey
+        # トークンは正しいがメールアドレスが無効な場合
+        get edit_account_activation_path(user_activation_token, email: 'wrong')
+        expect(logged_in_user?).to be_falsey
+        # 有効化トークンが正しい場合
+        get edit_account_activation_path(user_activation_token, email: user.email)
+        expect(response).to redirect_to user_path(user)
+        expect(user.reload.activated?).to be_truthy
+        expect(logged_in_user?).to be_truthy
       end
     end
   end

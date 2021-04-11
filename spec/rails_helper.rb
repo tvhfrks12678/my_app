@@ -81,9 +81,9 @@ RSpec.configure do |config|
   end
 
   # テストユーザーとしてログインする
-  def log_in_as(user)
-    session[:user_id] = user.id
-  end
+  # def log_in_as(user)
+  #   session[:user_id] = user.id
+  # end
 
   # テストユーザーとしてログインする
   def log_in_as(user,  remember_me: '1')
