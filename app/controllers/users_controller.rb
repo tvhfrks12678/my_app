@@ -5,11 +5,12 @@ class UsersController < ApplicationController
   MG_USER_ACCOUNT_ACTIVE_METHOD = 'Please check your email to activate your account'.freeze
 
   def index
-    @users = User.paginate(page: params[:page])
+    @users = User.where(activated: true).paginate(page: params[:page])
   end
 
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
   end
 
   def new
@@ -19,7 +20,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      UserMailer.account_activation(@user).deliver_now
+      @user.send_activation_email
       flash[:info] = MG_USER_ACCOUNT_ACTIVE_METHOD
       return redirect_to root_url
     end

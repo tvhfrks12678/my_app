@@ -6,14 +6,9 @@ class AccountActivationsController < ApplicationController
 
     return display_invalid_activation unless user && !user.activated? && user.authenticated?(:activation, params[:id])
 
-    activate_acccount(user)
+    user.activate
     log_in user
     display_valid_activation(user)
-  end
-
-  def activate_acccount(user)
-    user.update_attribute(:activated, true)
-    user.update_attribute(:activated_at, Time.zone.now)
   end
 
   def display_valid_activation(user)
