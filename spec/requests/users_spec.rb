@@ -5,13 +5,24 @@ RSpec.describe 'Users', type: :request do
   let(:admin_user) { FactoryBot.create(:user, admin: true) }
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
+  let(:not_activated_user) { FactoryBot.create(:user, activated: false) }
   let(:user_params) { FactoryBot.attributes_for(:user) }
 
   describe '#index' do
     context 'ログインせずにGETした時' do
       it 'loginページにリダイレクトされる' do
         get users_path
+
         expect(response).to redirect_to login_url
+      end
+    end
+  end
+
+  describe '#show' do
+    context 'メールでアクティベートしていないユーザーにアクセスした時' do
+      it 'rootにリダイレクトされる' do
+        get user_path(not_activated_user)
+        expect(response).to redirect_to root_url
       end
     end
   end
