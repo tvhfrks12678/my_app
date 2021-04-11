@@ -45,11 +45,11 @@ RSpec.describe 'Users', type: :request do
         expect do
           post users_path, params: { user: user_registration_data }
           aggregate_failures do
-            expect(response).to redirect_to user_path(User.last)
+            expect(response).to redirect_to root_url
             follow_redirect!
             expect(response.body).to include base_title
-            expect(flash[:success]).to be_truthy
-            expect(logged_in_user?).to be_truthy
+            expect(flash[:info]).to be_truthy
+            expect(logged_in_user?).to be_falsey
           end
         end.to change(User, :count).by(1)
       end

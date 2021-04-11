@@ -2,7 +2,7 @@ class UsersController < ApplicationController
   before_action :logged_in_user, only: %i[index edit update destroy]
   before_action :correct_user, only: %i[edit update]
   before_action :admin_user, only: :destroy
-  MG_USER_REGISTRATION_SUCCESS = 'Welcome to the Sample App!'.freeze
+  MG_USER_ACCOUNT_ACTIVE_METHOD = 'Please check your email to activate your account'.freeze
 
   def index
     @users = User.paginate(page: params[:page])
@@ -19,9 +19,9 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      log_in @user
-      flash[:success] = MG_USER_REGISTRATION_SUCCESS
-      return redirect_to @user
+      UserMailer.account_activation(@user).deliver_now
+      flash[:info] = MG_USER_ACCOUNT_ACTIVE_METHOD
+      return redirect_to root_url
     end
     render 'new'
   end

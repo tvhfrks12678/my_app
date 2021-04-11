@@ -86,3 +86,10 @@ Style/EmptyMethod:
 
 Metrics/BlockLength:
   IgnoredMethods: ['describe', 'context', 'scenario']
+
+Rails/SkipsModelValidations:
+  Exclude:
+    - 'app/controllers/sessions_controller.rb'
+    - 'app/controllers/account_activations_controller.rb'
+    - 'app/models/user.rb'
+    - 'spec/helpers/sessions_helper_spec.rb'
