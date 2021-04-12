@@ -108,7 +108,7 @@ RSpec.describe User, type: :model do
     context 'remember_digestがnillの時' do
       it 'falseをリターンする' do
         user = FactoryBot.build(:user, remember_token: nil)
-        expect(user.authenticated?('')).to be_falsey
+        expect(user.authenticated?(:remember, '')).to be_falsey
       end
     end
   end
