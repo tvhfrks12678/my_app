@@ -70,7 +70,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   host = 'frozen-springs-27884.herokuapp.com'
   config.action_mailer.default_url_options = { host: host }
-  ActionMailer::Base.smtp_setttings = {
+  ActionMailer::Base.smtp_settings = {
     port: ENV['MAILGUN_SMTP_PORT'],
     address: ENV['MAILGUN_SMTP_SERVER'],
     user_name: ENV['MAILGUN_SMTP_LOGIN'],
