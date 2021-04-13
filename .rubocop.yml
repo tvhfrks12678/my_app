@@ -93,3 +93,5 @@ Rails/SkipsModelValidations:
     - 'app/controllers/account_activations_controller.rb'
     - 'app/models/user.rb'
     - 'spec/helpers/sessions_helper_spec.rb'
+    - 'spec/system/password_resets_spec.rb'
+    - 'app/controllers/password_resets_controller.rb'

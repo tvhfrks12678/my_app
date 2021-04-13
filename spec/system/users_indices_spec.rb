@@ -4,7 +4,7 @@ RSpec.describe 'UsersIndices', type: :system do
   before do
     @admin_user = FactoryBot.create(:user, admin: true)
     @no_admin_user = FactoryBot.create(:user, admin: false)
-    FactoryBot.create(:user, activated: false)
+    @not_activated_user = FactoryBot.create(:user, activated: false)
     35.times do
       FactoryBot.create(:user)
     end
@@ -16,13 +16,12 @@ RSpec.describe 'UsersIndices', type: :system do
     expect(current_path).to eq users_path
     expect(page).to have_css '.pagination'
     expect(page.all('div.pagination').length).to eq 2
-    User.paginate(page: 1).each do |user_info|
+    expect(page.body).to_not have_link @not_activated_user.name, href: user_path(@not_activated_user)
+
+    User.where(activated: true).paginate(page: 1).each do |user_info|
       expect(page.body).to have_link 'delete', href: user_path(user_info) unless user_info == @admin_user
-      if user_info.activated
-        expect(page.body).to have_link user_info.name, href: user_path(user_info)
-        next
-      end
-      expect(page.body).to_not have_link user_info.name, href: user_path(user_info)
+
+      expect(page.body).to have_link user_info.name, href: user_path(user_info)
     end
 
     expect do
