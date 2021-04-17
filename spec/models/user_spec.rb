@@ -119,6 +119,7 @@ RSpec.describe User, type: :model do
     expect(user.following?(other_user))
     user.follow(other_user)
     expect(user.following?(other_user))
+    expect(other_user.followers.include?(user))
     user.unfollow(other_user)
     expect(user.following?(other_user))
   end
