@@ -85,7 +85,7 @@ Style/EmptyMethod:
 #     - 'spec/**/*'
 
 Metrics/BlockLength:
-  IgnoredMethods: ['describe', 'context', 'it', 'scenario']
+  IgnoredMethods: ['describe', 'context', 'it', 'scenario', 'fdescribe']
 
 Rails/SkipsModelValidations:
   Exclude:
