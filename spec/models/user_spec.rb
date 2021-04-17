@@ -2,6 +2,8 @@ require 'rails_helper'
 
 RSpec.describe User, type: :model do
   let(:user_valid) { FactoryBot.build(:user) }
+  let(:user) { FactoryBot.create(:user) }
+  let(:other_user) { FactoryBot.create(:user) }
 
   context 'ユーザーの情報が正常な時' do
     it '有効' do
@@ -111,5 +113,13 @@ RSpec.describe User, type: :model do
         expect(user.authenticated?(:remember, '')).to be_falsey
       end
     end
+  end
+
+  it 'should follow and unfollow a user' do
+    expect(user.following?(other_user))
+    user.follow(other_user)
+    expect(user.following?(other_user))
+    user.unfollow(other_user)
+    expect(user.following?(other_user))
   end
 end
