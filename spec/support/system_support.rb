@@ -13,5 +13,6 @@ module SystemSupport
 end
 
 RSpec.configure do |config|
-  config.include(SystemSupport, type: :system)
+  # config.include(SystemSupport, type: :system)
+  config.include(SystemSupport)
 end
