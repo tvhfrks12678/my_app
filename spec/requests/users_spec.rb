@@ -173,4 +173,14 @@ RSpec.describe 'Users', type: :request do
       end
     end
   end
+
+  it 'should redirect following when not logged in' do
+    get following_user_path(user)
+    expect(response).to redirect_to login_path
+  end
+
+  it 'should redirect followers when not logged in' do
+    get followers_user_path(user)
+    expect(response).to redirect_to login_path
+  end
 end

@@ -7,7 +7,14 @@ RSpec.describe 'UsersProfiles', type: :system do
   scenario 'プロフィールの表示' do
     50.times do
       FactoryBot.create(:micropost, user: user)
+      FactoryBot.create(:user)
     end
+
+    users = User.all
+    following = users[2..50]
+    followers = users[3..40]
+    following.each { |followed| user.follow(followed) }
+    followers.each { |follower| follower.follow(user) }
 
     visit user_path(user)
     expect(page.title).to eq full_title(user.name)
@@ -18,5 +25,8 @@ RSpec.describe 'UsersProfiles', type: :system do
     user.microposts.paginate(page: 1).each do |micropost|
       expect(page.body).to include(micropost.content)
     end
+
+    expect(page).to have_selector "a[href='/users/#{user.id}/following']", text: '49'
+    expect(page).to have_selector "a[href='/users/#{user.id}/followers']", text: '38'
   end
 end

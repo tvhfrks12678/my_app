@@ -7,6 +7,14 @@ module LoginSupport
     fill_in 'session_password', with: password
     click_button 'Log in'
   end
+
+  def log_in_for_systemspec_as(user)
+    visit root_path
+    click_link 'Log in'
+    fill_in 'session_email',	with: user.email
+    fill_in 'session_password', with: user.password
+    click_button 'Log in'
+  end
 end
 
 RSpec.configure do |config|
