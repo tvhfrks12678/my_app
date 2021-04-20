@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.fdescribe Relationship, type: :model do
+RSpec.describe Relationship, type: :model do
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
   # let(:relationship) { FactoryBot.build(:relationship, follower_id: user.id, followed_id: other_user.id) }
