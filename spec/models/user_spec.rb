@@ -4,6 +4,7 @@ RSpec.describe User, type: :model do
   let(:user_valid) { FactoryBot.build(:user) }
   let(:user) { FactoryBot.create(:user) }
   let(:other_user) { FactoryBot.create(:user) }
+  let(:other_second_user) { FactoryBot.create(:user) }
 
   context 'ユーザーの情報が正常な時' do
     it '有効' do
@@ -122,5 +123,24 @@ RSpec.describe User, type: :model do
     expect(other_user.followers.include?(user))
     user.unfollow(other_user)
     expect(user.following?(other_user))
+  end
+
+  it 'feed should have the right posts' do
+    FactoryBot.create(:micropost, user: user)
+    FactoryBot.create(:micropost, user: other_user)
+    FactoryBot.create(:micropost, user: other_second_user)
+    user.follow(other_user)
+    # フォローしているユーザーの投稿を確認
+    other_user.microposts.each do |post_following|
+      expect(user.feed).to include post_following
+    end
+    # 自分自身の投稿を確認
+    user.microposts.each do |post_self|
+      expect(user.feed).to include post_self
+    end
+    # フォローしていないユーザーの投稿を確認
+    other_second_user.microposts.each do |post_following|
+      expect(user.feed).to_not include post_following
+    end
   end
 end
