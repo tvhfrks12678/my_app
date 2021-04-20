@@ -43,5 +43,8 @@ module MyApp
     config.generators.system_tests = nil
 
     config.action_mailer.preview_path = Rails.root.join('spec/mailers/previews').to_s
+
+    # 認証トークンをremoteフォームに埋め込む
+    config.action_view.embed_authenticity_token_in_remote_forms = true
   end
 end
